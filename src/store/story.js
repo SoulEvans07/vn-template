@@ -79,7 +79,91 @@ const story = {
   },
   '3-2-3': {
     speaker: 'lucy', text: "Thanks for waiting!",
-    next: [ 'end' ], isSkippable: true,
+    next: [ '3-2-4' ], isSkippable: true,
+    condition: null,
+    scene: {
+      location: 'school',
+      characters: [ 'emma', 'lucy' ]
+    }
+  },
+  '3-2-4': {
+    speaker: 'lucy', text: "Could you hold this for me?",
+    next: [ '3-2-4-1', '3-2-4-2', '3-2-4-3' ], isSkippable: false,
+    condition: null,
+    scene: {
+      location: 'school',
+      characters: [ 'emma', 'lucy' ]
+    }
+  },
+  '3-2-4-1': {
+    speaker: 'player', text: "Why would I?",
+    next: [ '3-2-4-1-1' ], isSkippable: false,
+    condition: {
+      typeField: 'stats',
+      itemField: 'cha',
+      displayNameField: 'name',
+      valueField: "value",
+      value: 15
+    },
+    scene: {
+      location: 'school',
+      characters: [ 'emma', 'lucy' ]
+    }
+  },
+  '3-2-4-1-1': {
+    speaker: 'lucy', text: "You are terrible! Fine, I'll do it myself!",
+    next: [ '3-2-4-1-2' ], isSkippable: false,
+    condition: null,
+    scene: {
+      location: 'school',
+      characters: [ 'emma', 'lucy' ]
+    }
+  },
+  '3-2-4-1-2': {
+    speaker: 'emma', text: "There was no need for this!",
+    next: [ 'end' ], isSkippable: false,
+    condition: null,
+    scene: {
+      location: 'school',
+      characters: [ 'emma' ]
+    }
+  },
+  '3-2-4-2': {
+    speaker: 'player', text: "Sorry, I can't...",
+    next: [ '3-2-4-2-1' ], isSkippable: false,
+    condition: null,
+    scene: {
+      location: 'school',
+      characters: [ 'emma', 'lucy' ]
+    }
+  },
+  '3-2-4-2-1': {
+    speaker: 'lucy', text: "Really!? Fine, I'll do it myself...",
+    next: [ 'end' ], isSkippable: false,
+    condition: null,
+    scene: {
+      location: 'school',
+      characters: [ 'emma', 'lucy' ]
+    }
+  },
+  '3-2-4-3': {
+    speaker: 'player', text: "Of course!",
+    next: [ '3-2-4-3-1' ], isSkippable: false,
+    condition: {
+      typeField: 'stats',
+      itemField: 'str',
+      displayNameField: 'name',
+      valueField: "value",
+      value: 5
+    },
+    scene: {
+      location: 'school',
+      characters: [ 'emma', 'lucy' ]
+    }
+  },
+  '3-2-4-3-1': {
+    speaker: 'lucy', text: "Thank you!",
+    next: [ 'end' ], isSkippable: false,
     condition: null,
     scene: {
       location: 'school',

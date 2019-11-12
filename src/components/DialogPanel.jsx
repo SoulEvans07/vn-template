@@ -24,15 +24,15 @@ class DialogPanel extends Component{
     const { currentDialog, player, actions } = this.props
     if (currentDialog.next) {
       if (currentDialog.next.length === 1) {
-        actions.setDialog(currentDialog.next, 0)
+        actions.setDialog(currentDialog.next)
       } else if (currentDialog.next.length > 1 && selected != null) {
         const next = currentDialog.next.map(opt => story[opt])[selected]
         if (next.condition != null) {
           if (dialogHelpers.checkConditionByOption(next, player)) {
-            actions.setDialog(currentDialog.next, selected)
+            actions.setDialog(next.next)
           }
         } else {
-          actions.setDialog(currentDialog.next, selected)
+          actions.setDialog(next.next)
         }
       }
     }
