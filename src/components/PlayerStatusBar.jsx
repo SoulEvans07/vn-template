@@ -1,4 +1,6 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
+
 import './PlayerStatusBar.scss'
 
 class PlayerStatusBar extends Component {
@@ -13,7 +15,7 @@ class PlayerStatusBar extends Component {
             return (
               <span className="currency" key={curr[0]}>
                 <span className="currency-short">{curr[1].symbol}</span>
-                <span className="currency-amount">{curr[1].getValue()}</span>
+                <span className="currency-amount">{curr[1].value}</span>
               </span>
             )
           })}
@@ -23,4 +25,8 @@ class PlayerStatusBar extends Component {
   }
 }
 
-export default PlayerStatusBar
+const mapStateToProps = state => ({
+  player: state.characters.player
+})
+
+export default connect(mapStateToProps, null) (PlayerStatusBar)

@@ -10,16 +10,18 @@ $textbox-height: 25%;
   flex-direction: column;
 
   .characters {
+    overflow: hidden;
     height: 100%;
     display: flex;
     flex-direction: row-reverse;
     justify-content: flex-start;
+    padding: 0 10%;
 
     .character-avatar {
       position: relative;
       z-index: 0;
-      top: 100px;
-      right: 10px;
+      top: 200px;
+      right: 50px;
       height: 100%;
 
       & > img {
@@ -40,7 +42,6 @@ $textbox-height: 25%;
     align-items: center;
 
     .option {
-      user-select: none;
       cursor: pointer;
       background: rgba(238, 238, 238, 0.8);
       width: 50%;
@@ -62,6 +63,7 @@ $textbox-height: 25%;
       &.disabled {
         cursor: default;
         background: rgba(238, 238, 238, 0.8);
+        color: #a5a5a5;
       }
     }
   }
@@ -70,8 +72,8 @@ $textbox-height: 25%;
     position: fixed;
     bottom: 0;
     z-index: 1;
-    width: calc(100% - 120px);
-    padding: 10px 60px;
+    width: calc(100% - 30%);
+    padding: 10px 15%;
     height: calc(#{$textbox-height} - 20px - 20px);
     background: rgba(238, 238, 238, 0.8);
 

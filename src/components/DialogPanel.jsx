@@ -1,13 +1,18 @@
 import React, { Component } from 'react'
-import './DialogPanel.scss'
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
 
+import './DialogPanel.scss'
+import * as dialogActions from '../actions/dialogActions'
+import * as dialogHelpers from '../helpers/dialogHelpers'
+import story from '../store/story'
 
 class DialogPanel extends Component{
   constructor(props) {
     super(props)
 
-    this.state = {
-      dialog: props.story["01"]
+    if (props.currentDialog === null) {
+      props.actions.setDialog(['1'])
     }
 
     this.continue = this.continue.bind(this)
@@ -16,22 +21,34 @@ class DialogPanel extends Component{
   }
 
   continue(selected) {
-    const { story, player } = this.props
-    const current = this.state.dialog
-    if(current.continue(story, selected, player))
-      this.setState({ dialog: current.continue(story, selected, player) })
+    const { currentDialog, player, actions } = this.props
+    if (currentDialog.next) {
+      if (currentDialog.next.length === 1) {
+        actions.setDialog(currentDialog.next, 0)
+      } else if (currentDialog.next.length > 1 && selected != null) {
+        const next = currentDialog.next.map(opt => story[opt])[selected]
+        if (next.condition != null) {
+          if (dialogHelpers.checkConditionByOption(next, player)) {
+            actions.setDialog(currentDialog.next, selected)
+          }
+        } else {
+          actions.setDialog(currentDialog.next, selected)
+        }
+      }
+    }
   }
 
   renderOption(option, index) {
-    const { story, player } = this.props
+    const { player } = this.props
 
     let text = option.text
     let isDisabled = false
-    if (option.condition != null && option.condition.check != null) {
-      const { check } = option.condition
-      text = `[${player[check.typeField][check.itemField][check.displayNameField]} ${check.value}] ${text}`
+    if (option.condition != null) {
+      const { condition } = option
+      text = `[${player[condition.typeField][condition.itemField][condition.displayNameField]}` +
+        `  ${player[condition.typeField][condition.itemField].value}/${condition.value}] ${text}`
 
-      isDisabled = !option.checkSelfCondition(player)
+      isDisabled = !dialogHelpers.checkConditionByOption(option, player)
     }
     return (
       <div className={"option" + (isDisabled ? " disabled" : "")} key={text + index}
@@ -42,7 +59,6 @@ class DialogPanel extends Component{
   }
 
   renderChoices(dialog) {
-    const { story, player } = this.props
     const { next } = dialog
     const optionList = next.map(opt => story[opt])
     return (
@@ -53,8 +69,8 @@ class DialogPanel extends Component{
   }
 
   render() {
-    const { dialog } = this.state
-    const url = "https://66.media.tumblr.com/bd91b2e7002002de51807c1edf4dc4aa/tumblr_o9tcb8UYXm1tykq7oo1_1280.jpg";
+    const { currentDialog } = this.props
+    const url = currentDialog ? process.env.PUBLIC_URL + currentDialog.scene.location.background : null
     const panelStyle = {
       backgroundImage: `url(${url})`,
       backgroundPosition: 'bottom',
@@ -65,8 +81,8 @@ class DialogPanel extends Component{
     return (
       <div className="dialog-panel" style={panelStyle}>
         <div className="characters">
-          {!!dialog && !!dialog.participants &&
-            dialog.participants.map((char, index) => {
+          {!!currentDialog && !!currentDialog.scene.characters &&
+            currentDialog.scene.characters.map((char, index) => {
               return (
                 <div className="character-avatar" key={char.name}>
                   <img src={char.img} alt={char.name}/>
@@ -75,19 +91,19 @@ class DialogPanel extends Component{
             })
           }
         </div>
-        { dialog && dialog.isChoice && this.renderChoices(dialog) }
+        { currentDialog && currentDialog.next && currentDialog.next.length > 1 && this.renderChoices(currentDialog) }
         <div className="dialog-textbox">
           <div className="dialog-header">
-            {!!dialog &&
-              <span style={{ color: dialog.speaker.color }}>
-                { dialog.speaker.name }
+            {!!currentDialog &&
+              <span style={{ color: currentDialog.speaker.color }}>
+                { currentDialog.speaker.name }
               </span>
             }
           </div>
           <div className="dialog-text">
-            {!!dialog &&
-              <span style={{ color: dialog.speaker.color }}>
-                { dialog.text }
+            {!!currentDialog &&
+              <span style={{ color: currentDialog.speaker.color }}>
+                { currentDialog.text }
               </span>
             }
           </div>
@@ -103,4 +119,14 @@ class DialogPanel extends Component{
   }
 }
 
-export default DialogPanel
+const mapStateToProps = (state) => ({
+  player: state.characters.player,
+  currentDialog: state.currentDialog
+})
+
+const mapDispatchToProps = (dispatch) => ({
+  actions: bindActionCreators({ ...dialogActions }, dispatch)
+})
+
+
+export default connect(mapStateToProps, mapDispatchToProps) (DialogPanel)

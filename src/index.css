@@ -5,6 +5,7 @@ html, body {
 
 * {
   outline: none;
+  user-select: none;
 }
 
 input[type="button"], button {
