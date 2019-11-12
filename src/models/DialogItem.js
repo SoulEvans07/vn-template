@@ -35,7 +35,7 @@ class DialogItem {
     if (this.next) {
       if (this.isChoice && selected != null) {
         if (this.checkCondition(story, selected, player)) {
-          return story[this.next[selected]]
+          return story[story[this.next[selected]].next]
         } else {
           return null
         }
