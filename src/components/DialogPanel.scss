@@ -1,0 +1,121 @@
+$textbox-height: 25%;
+
+.dialog-panel {
+  position: relative;
+  margin: auto;
+  width: 100%;
+  height: calc(100% - 40px);
+  background: transparent;
+  display: flex;
+  flex-direction: column;
+
+  .characters {
+    height: 100%;
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: flex-start;
+
+    .character-avatar {
+      position: relative;
+      z-index: 0;
+      top: 100px;
+      right: 10px;
+      height: 100%;
+
+      & > img {
+        height: 100%;
+      }
+    }
+  }
+
+  .dialog-options {
+    position: fixed;
+    top: 40px;
+    z-index: 1;
+    width: 100%;
+    height: calc(100% - #{$textbox-height} - 20px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    .option {
+      user-select: none;
+      cursor: pointer;
+      background: rgba(238, 238, 238, 0.8);
+      width: 50%;
+      height: 40px;
+      line-height: 40px;
+      font-size: 20px;
+      text-align: center;
+      margin: 10px 0;
+      border-radius: 3px;
+
+      &:hover {
+        background: darken(rgba(238, 238, 238, 0.8), 10%);
+      }
+
+      &:active {
+        background: darken(rgba(238, 238, 238, 0.8), 20%);
+      }
+
+      &.disabled {
+        cursor: default;
+        background: rgba(238, 238, 238, 0.8);
+      }
+    }
+  }
+
+  .dialog-textbox {
+    position: fixed;
+    bottom: 0;
+    z-index: 1;
+    width: calc(100% - 120px);
+    padding: 10px 60px;
+    height: calc(#{$textbox-height} - 20px - 20px);
+    background: rgba(238, 238, 238, 0.8);
+
+    .dialog-header {
+      width: 100%;
+      height: 40px;
+      line-height: 40px;
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    .dialog-text {
+      height: calc(100% - 40px - 30px);
+      font-size: 18px;
+    }
+
+    .dialog-controls {
+      height: 30px;
+      line-height: 30px;
+      font-size: 16px;
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-end;
+
+      .control-btn {
+        user-select: none;
+        cursor: pointer;
+        font-weight: bold;
+        font-size: 16px;
+        padding: 0 10px;
+        border-radius: 3px;
+
+        i {
+          padding: 0 5px;
+        }
+
+        &:hover {
+          background: rgba(0, 0, 0, 0.1);
+        }
+
+        &:active {
+          background: rgba(0, 0, 0, 0.2);
+        }
+      }
+    }
+  }
+}
