@@ -52,7 +52,7 @@ class App extends Component {
       "03-2": new DialogItem(player, "(Wait for her)", "03-2-1", {
         participants: [emma]
       }),
-      "03-1-1": new DialogItem(player, `Let's go ${emma.name}`, null, {
+      "03-1-1": new DialogItem(player, `Let's go ${emma.name}`, "end", {
         participants: [emma]
       }),
       "03-2-1": new DialogItem(player, "Quick, we ain't got all day to do this", "03-2-2", {
@@ -61,9 +61,12 @@ class App extends Component {
       "03-2-2": new DialogItem(emma, "Actually we do...", "03-2-3", {
         participants: [emma]
       }),
-      "03-2-3": new DialogItem(lucy, "Thanks for waiting!", null, {
+      "03-2-3": new DialogItem(lucy, "Thanks for waiting!", "end", {
         participants: [emma, lucy]
-      })
+      }),
+      "end": new DialogItem(player, "The End.", null, {
+        participants: []
+      }),
     }
 
     this.state = {
