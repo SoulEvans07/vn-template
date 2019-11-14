@@ -2,7 +2,6 @@ const story = {
   '1': {
     speaker: 'player', text: "Hello Emma!",
     next: [ '2' ], isSkippable: true,
-    condition: null,
     scene: {
       location: 'school',
       characters: [ 'emma' ]
@@ -11,7 +10,6 @@ const story = {
   '2': {
     speaker: 'emma', text: "Hi %characters.player.name%!",
     next: [ '3' ], isSkippable: true,
-    condition: null,
     scene: {
       location: 'school',
       characters: [ 'emma' ]
@@ -20,7 +18,6 @@ const story = {
   '3': {
     speaker: 'lucy', text: "Hey %characters.player.name%! Don't leave without me! %characters.emma.name%!",
     next: [ '3-1', '3-2' ], isSkippable: false,
-    condition: null,
     scene: {
       location: 'school',
       characters: [ 'emma' ]
@@ -33,7 +30,6 @@ const story = {
       typeField: 'stats',
       itemField: 'cha',
       displayNameField: 'name',
-      valueField: "value",
       value: 9
     },
     scene: {
@@ -44,7 +40,6 @@ const story = {
   '3-1-1': {
     speaker: 'player', text: "Let's go Emma",
     next: [ 'end' ], isSkippable: true,
-    condition: null,
     scene: {
       location: 'school',
       characters: [ 'emma' ]
@@ -53,7 +48,6 @@ const story = {
   '3-2': {
     speaker: 'player', text: "(Wait for her)",
     next: [ '3-2-1' ], isSkippable: true,
-    condition: null,
     scene: {
       location: 'school',
       characters: [ 'emma' ]
@@ -62,7 +56,6 @@ const story = {
   '3-2-1': {
     speaker: 'player', text: "Quick, we ain't got all day to do this.",
     next: [ '3-2-2' ], isSkippable: true,
-    condition: null,
     scene: {
       location: 'school',
       characters: [ 'emma' ]
@@ -71,7 +64,6 @@ const story = {
   '3-2-2': {
     speaker: 'emma', text: "Actually we do...",
     next: [ '3-2-3' ], isSkippable: true,
-    condition: null,
     scene: {
       location: 'school',
       characters: [ 'emma' ]
@@ -80,7 +72,6 @@ const story = {
   '3-2-3': {
     speaker: 'lucy', text: "Thanks for waiting!",
     next: [ '3-2-4' ], isSkippable: true,
-    condition: null,
     scene: {
       location: 'school',
       characters: [ 'emma', 'lucy' ]
@@ -102,8 +93,7 @@ const story = {
       typeField: 'stats',
       itemField: 'cha',
       displayNameField: 'name',
-      valueField: "value",
-      value: 15
+      value: 9
     },
     scene: {
       location: 'school',
@@ -113,7 +103,6 @@ const story = {
   '3-2-4-1-1': {
     speaker: 'lucy', text: "You are terrible! Fine, I'll do it myself!",
     next: [ '3-2-4-1-2' ], isSkippable: false,
-    condition: null,
     scene: {
       location: 'school',
       characters: [ 'emma', 'lucy' ]
@@ -122,7 +111,15 @@ const story = {
   '3-2-4-1-2': {
     speaker: 'emma', text: "There was no need for this!",
     next: [ 'end' ], isSkippable: false,
-    condition: null,
+    actions: [
+      {
+        type: 'DECREASE',
+        target: 'player',
+        typeField: 'stats',
+        itemField: 'cha',
+        amount: 2
+      }
+    ],
     scene: {
       location: 'school',
       characters: [ 'emma' ]
@@ -131,7 +128,6 @@ const story = {
   '3-2-4-2': {
     speaker: 'player', text: "Sorry, I can't...",
     next: [ '3-2-4-2-1' ], isSkippable: false,
-    condition: null,
     scene: {
       location: 'school',
       characters: [ 'emma', 'lucy' ]
@@ -140,7 +136,6 @@ const story = {
   '3-2-4-2-1': {
     speaker: 'lucy', text: "Really!? Fine, I'll do it myself...",
     next: [ 'end' ], isSkippable: false,
-    condition: null,
     scene: {
       location: 'school',
       characters: [ 'emma', 'lucy' ]
@@ -153,7 +148,6 @@ const story = {
       typeField: 'stats',
       itemField: 'str',
       displayNameField: 'name',
-      valueField: "value",
       value: 5
     },
     scene: {
@@ -164,7 +158,6 @@ const story = {
   '3-2-4-3-1': {
     speaker: 'lucy', text: "Thank you!",
     next: [ 'end' ], isSkippable: false,
-    condition: null,
     scene: {
       location: 'school',
       characters: [ 'emma', 'lucy' ]
@@ -173,7 +166,6 @@ const story = {
   'end': {
     speaker: 'player', text: "The End",
     next: null, isSkippable: true,
-    condition: null,
     scene: {
       location: 'school',
       characters: []

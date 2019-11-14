@@ -24,7 +24,7 @@ class DialogItem {
   checkConditionByOption(option, player) {
     if (option.condition != null && option.condition.check != null) {
       const { check } = option.condition
-      const value = player[check.typeField][check.itemField][check.valueField]
+      const value = player[check.typeField][check.itemField].value
       return value >= check.value
     } else {
       return true

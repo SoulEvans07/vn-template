@@ -10,13 +10,12 @@ export function checkCondition(selected, player) {
 export function checkConditionByOption(option, player) {
   if (option.condition != null) {
     const { condition } = option
-    const value = player[condition.typeField][condition.itemField][condition.valueField]
+    const value = player[condition.typeField][condition.itemField].value
     return value >= condition.value
   } else {
     return true
   }
 }
-
 
 function getVariable(state, selector) {
   const fields = selector.substring(1, selector.length-1).split('.')
