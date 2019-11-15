@@ -10,7 +10,7 @@ import * as dialogHelpers from '../helpers/dialogHelpers'
 function setDialog(state, payload) {
   if (payload.dialogIds == null || payload.dialogIds.length === 0) return state
 
-  const { characters, locations } = state
+  const { characters, locations, stores } = state
   const { dialogIds, selected } = payload
   const index = selected != null ? selected : 0
   const dialog = _.cloneDeep(story[dialogIds[index]])
@@ -18,6 +18,7 @@ function setDialog(state, payload) {
   dialog.speaker = characters[dialog.speaker]
   dialog.scene.characters = dialog.scene.characters.map(char => characters[char])
   dialog.scene.location = locations[dialog.scene.location]
+  dialog.scene.store = stores[dialog.scene.store]
   dialog.text = dialogHelpers.fillDialog(state, dialog.text)
 
   let newState = state

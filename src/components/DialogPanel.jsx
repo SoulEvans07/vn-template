@@ -6,13 +6,14 @@ import './DialogPanel.scss'
 import * as dialogActions from '../actions/dialogActions'
 import * as dialogHelpers from '../helpers/dialogHelpers'
 import story from '../store/story'
+import { storyStart } from '../store/story'
 
 class DialogPanel extends Component{
   constructor(props) {
     super(props)
 
     if (props.currentDialog === null) {
-      props.actions.setDialog(['1'])
+      props.actions.setDialog([storyStart])
     }
 
     this.continue = this.continue.bind(this)
@@ -70,6 +71,20 @@ class DialogPanel extends Component{
     )
   }
 
+  renderStore(dialog) {
+    const { currencies } = this.props
+    const { items } = dialog.scene.store
+    return (
+      <div className="store dialog-options">
+        { items.map((item, index) => (
+          <div className="option" key={item.name + index}>
+            { `${item.name}: ${currencies[item.price.currency].symbol}${item.price.amount}` }
+          </div>
+        ))}
+      </div>
+    )
+  }
+
   render() {
     const { currentDialog } = this.props
     const url = currentDialog ? process.env.PUBLIC_URL + currentDialog.scene.location.background : null
@@ -93,7 +108,12 @@ class DialogPanel extends Component{
             })
           }
         </div>
-        { currentDialog && currentDialog.next && currentDialog.next.length > 1 && this.renderChoices(currentDialog) }
+        { currentDialog && currentDialog.next && currentDialog.next.length > 1 &&
+          this.renderChoices(currentDialog)
+        }
+        { currentDialog && currentDialog.scene.store &&
+          this.renderStore(currentDialog)
+        }
         <div className="dialog-textbox">
           <div className="dialog-header">
             {!!currentDialog &&
@@ -122,8 +142,9 @@ class DialogPanel extends Component{
 }
 
 const mapStateToProps = (state) => ({
+  currencies: state.currencies,
   player: state.characters.player,
-  currentDialog: state.currentDialog
+  currentDialog: state.currentDialog,
 })
 
 const mapDispatchToProps = (dispatch) => ({
