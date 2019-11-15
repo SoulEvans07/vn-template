@@ -13,35 +13,37 @@ function setDialog(state, payload) {
   const { characters, locations } = state
   const { dialogIds, selected } = payload
   const index = selected != null ? selected : 0
-  const dialog = story[dialogIds[index]]
+  const dialog = _.cloneDeep(story[dialogIds[index]])
 
   dialog.speaker = characters[dialog.speaker]
   dialog.scene.characters = dialog.scene.characters.map(char => characters[char])
   dialog.scene.location = locations[dialog.scene.location]
   dialog.text = dialogHelpers.fillDialog(state, dialog.text)
 
+  let newState = state
   if (dialog.actions) {
-    console.log("take actions")
-    dialog.actions.forEach(action => takeAction(state, { action }))
-    console.log(state)
+    for (let i = 0; i < dialog.actions.length; i++) {
+      newState = takeAction(state, { action: dialog.actions[i] })
+    }
   }
 
-  return { ...state, currentDialog: dialog }
+  return { ...newState, currentDialog: dialog }
 }
 
 function takeAction(state, payload) {
   const { characters } = state
-  const { action } = payload
+  const { type, target, typeField, itemField, amount } = payload.action
 
-  switch (action.type) {
+  const newCharacters = _.cloneDeep(characters)
+  switch (type) {
     case "DECREASE":
-      // const value = characters[action.target][action.typeField][action.itemField].value
-      const target = _.clone(characters[action.target], true)
-      target[action.typeField][action.itemField].value -= action.amount
-      const newCharacters = { ...characters, [action.target]: target }
+      newCharacters[target][typeField][itemField].value -= amount
+      return { ...state, characters: newCharacters }
+    case "INCREASE":
+      newCharacters[target][typeField][itemField].value += amount
       return { ...state, characters: newCharacters }
     default:
-
+      return state
   }
 }
 

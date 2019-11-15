@@ -158,6 +158,15 @@ const story = {
   '3-2-4-3-1': {
     speaker: 'lucy', text: "Thank you!",
     next: [ 'end' ], isSkippable: false,
+    actions: [
+      {
+        type: 'INCREASE',
+        target: 'player',
+        typeField: 'stats',
+        itemField: 'cha',
+        amount: 1
+      }
+    ],
     scene: {
       location: 'school',
       characters: [ 'emma', 'lucy' ]
@@ -165,7 +174,7 @@ const story = {
   },
   'end': {
     speaker: 'player', text: "The End",
-    next: null, isSkippable: true,
+    next: [ '1' ], isSkippable: true,
     scene: {
       location: 'school',
       characters: []
