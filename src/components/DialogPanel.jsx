@@ -17,6 +17,7 @@ class DialogPanel extends Component{
     }
 
     this.continue = this.continue.bind(this)
+    this.buy = this.buy.bind(this)
     this.renderChoices = this.renderChoices.bind(this)
     this.renderOption = this.renderOption.bind(this)
   }
@@ -39,6 +40,13 @@ class DialogPanel extends Component{
         }
       }
     }
+  }
+
+  buy(selected) {
+    console.log(selected)
+
+    // actions.buy
+    // this.continue()
   }
 
   renderOption(option, index) {
@@ -72,15 +80,22 @@ class DialogPanel extends Component{
   }
 
   renderStore(dialog) {
-    const { currencies } = this.props
+    const { next } = dialog
+    const { currencies, actions } = this.props
     const { items } = dialog.scene.store
+
+    const exitStoreOption = story[next[0]]
+
     return (
       <div className="store dialog-options">
         { items.map((item, index) => (
-          <div className="option" key={item.name + index}>
+          <div className="option" key={item.name + index} onClick={() => this.buy(item)}>
             { `${item.name}: ${currencies[item.price.currency].symbol}${item.price.amount}` }
           </div>
         ))}
+        <div className="option" onClick={() => actions.setDialog(exitStoreOption.next)}>
+          { exitStoreOption.text }
+        </div>
       </div>
     )
   }
@@ -94,6 +109,8 @@ class DialogPanel extends Component{
       backgroundRepeat: 'no-repeat',
       backgroundSize: 'cover'
     }
+
+    const isNextDisabled = currentDialog && currentDialog.scene.store;
 
     return (
       <div className="dialog-panel" style={panelStyle}>
@@ -130,10 +147,12 @@ class DialogPanel extends Component{
             }
           </div>
           <div className="dialog-controls">
-            <span className="control-btn" onClick={() => this.continue()}>
-              Next
-              <i className="fas fa-chevron-right" />
-            </span>
+            { !isNextDisabled &&
+              <span className="control-btn" onClick={() => this.continue()}>
+                Next
+                <i className="fas fa-chevron-right" />
+              </span>
+            }
           </div>
         </div>
       </div>

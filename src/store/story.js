@@ -1,4 +1,4 @@
-export const storyStart = 'street-day-0'
+export const storyStart = 'store-1'
 
 const story = {
   'street-day-0': {
@@ -21,6 +21,10 @@ const story = {
     next: [ 'store-1' ], isSkippable: true,
     scene: { location: 'street-day', characters: [ ] }
   },
+
+
+
+
   'store-1': {
     speaker: 'barista', text: "Come in! Don't be shy!",
     next: [ 'store-2' ], isSkippable: true,
@@ -28,12 +32,17 @@ const story = {
   },
   'store-2': {
     speaker: 'barista', text: "How can I help you?",
-    next: [ 'store-2' ], isSkippable: true,
+    next: [ 'store-exit' ], isSkippable: true,
     scene: {
       location: 'coffe-shop',
       characters: [ 'barista' ],
       store: 'coffee-shop'
     }
+  },
+  'store-exit': {
+    speaker: 'player', text: "Thank you! Bye!",
+    next: [ 'street-day-0' ], isSkippable: true,
+    scene: { location: 'coffe-shop', characters: [ 'barista' ] }
   },
 
 
@@ -44,6 +53,8 @@ const story = {
     next: [ 'school-1' ], isSkippable: true,
     scene: { location: 'street-day', characters: [ ] }
   },
+
+
 
 
   'school-1': {
@@ -168,6 +179,10 @@ const story = {
     ],
     scene: { location: 'school', characters: [ 'emma', 'lucy' ] }
   },
+
+
+
+
   'end': {
     speaker: 'player', text: "The End",
     next: [ 'school-1' ], isSkippable: true,
