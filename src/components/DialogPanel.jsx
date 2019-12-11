@@ -5,8 +5,8 @@ import { connect } from 'react-redux'
 import './DialogPanel.scss'
 import * as dialogActions from '../actions/dialogActions'
 import * as dialogHelpers from '../helpers/dialogHelpers'
-import story from '../store/story'
-import { storyStart } from '../store/story'
+import story from '../data/story'
+import { storyStart } from '../data/story'
 
 class DialogPanel extends Component{
   constructor(props) {

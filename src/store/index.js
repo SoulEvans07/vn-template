@@ -3,14 +3,15 @@ import thunk from 'redux-thunk'
 import _ from 'lodash'
 
 import initialState from './initialState'
-import story from './story'
+import story from '../data/story'
+import stores from '../data/stores'
 import { dialogActionTypes } from '../actions/dialogActions'
 import * as dialogHelpers from '../helpers/dialogHelpers'
 
 function setDialog(state, payload) {
   if (payload.dialogIds == null || payload.dialogIds.length === 0) return state
 
-  const { characters, locations, stores } = state
+  const { characters, locations } = state
   const { dialogIds, selected } = payload
   const index = selected != null ? selected : 0
   const dialog = _.cloneDeep(story[dialogIds[index]])

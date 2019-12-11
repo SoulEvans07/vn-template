@@ -1,4 +1,4 @@
-import story from '../store/story'
+import story from '../data/story'
 
 export function checkCondition(selected, player) {
   const optionList = this.next.map(opt => story[opt])
