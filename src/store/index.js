@@ -5,13 +5,14 @@ import _ from 'lodash'
 import initialState from './initialState'
 import story from '../data/story'
 import stores from '../data/stores'
+import locations from '../data/locations'
 import { dialogActionTypes } from '../actions/dialogActions'
 import * as dialogHelpers from '../helpers/dialogHelpers'
 
 function setDialog(state, payload) {
   if (payload.dialogIds == null || payload.dialogIds.length === 0) return state
 
-  const { characters, locations } = state
+  const { characters } = state
   const { dialogIds, selected } = payload
   const index = selected != null ? selected : 0
   const dialog = _.cloneDeep(story[dialogIds[index]])

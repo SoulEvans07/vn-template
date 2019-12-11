@@ -6,6 +6,8 @@ import './DialogPanel.scss'
 import * as dialogActions from '../actions/dialogActions'
 import * as dialogHelpers from '../helpers/dialogHelpers'
 import story from '../data/story'
+import itemMap from '../data/items'
+import currencies from '../data/currencies'
 import { storyStart } from '../data/story'
 
 class DialogPanel extends Component{
@@ -79,9 +81,22 @@ class DialogPanel extends Component{
     )
   }
 
+  renderItem(item, index) {
+    const displayName = itemMap[item.name].displayName
+    const description = itemMap[item.name].description
+    const symbol = currencies[item.price.currency].symbol
+    const price = item.price.amount
+
+    return (
+      <div className="option" key={item.name + index} onClick={() => this.buy(item)} title={description} >
+        { `${displayName}: ${symbol}${price}` }
+      </div>
+    )
+  }
+
   renderStore(dialog) {
     const { next } = dialog
-    const { currencies, actions } = this.props
+    const { actions } = this.props
     const { items } = dialog.scene.store
 
     const exitStoreOption = story[next[0]]
@@ -89,9 +104,7 @@ class DialogPanel extends Component{
     return (
       <div className="store dialog-options">
         { items.map((item, index) => (
-          <div className="option" key={item.name + index} onClick={() => this.buy(item)}>
-            { `${item.name}: ${currencies[item.price.currency].symbol}${item.price.amount}` }
-          </div>
+          this.renderItem(item, index)
         ))}
         <div className="option" onClick={() => actions.setDialog(exitStoreOption.next)}>
           { exitStoreOption.text }

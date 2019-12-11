@@ -1,10 +1,5 @@
 /* eslint-disable no-template-curly-in-string */
 
-const currencies = {
-  yen: { symbol: '¥' },
-  diamond: { symbol: '💎' },
-}
-
 const player = {
   name: 'Soul',
   color: '#2c3e50',
@@ -29,20 +24,10 @@ const characters = {
   barista: { name: 'Sarah', color: '#5433a0', img: '/characters/barista.png' },
 }
 
-const locations = {
-  'school': { name: 'School', background: '/bg/school-bg.png' },
-  'street-day': { name: 'Street', background: '/bg/street-day.jpg' },
-  'street-night': { name: 'Street', background: '/bg/street-night.jpg' },
-  'store': { name: 'Convenience store', background: '/bg/store.jpg' },
-  'coffe-shop': { name: 'Coffee shop', background: '/bg/coffee-shop.jpeg' },
-}
-
 
 const initialState = {
   error: null,
-  currencies,
   characters,
-  locations,
   currentDialog: null
 }
 

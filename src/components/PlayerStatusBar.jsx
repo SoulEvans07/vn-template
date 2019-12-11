@@ -1,11 +1,13 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
+import currencies from '../data/currencies'
+
 import './PlayerStatusBar.scss'
 
 class PlayerStatusBar extends Component {
   render() {
-    const { player, currencies } = this.props
+    const { player } = this.props
 
     return (
       <div className="player-statusbar">
@@ -28,8 +30,7 @@ class PlayerStatusBar extends Component {
 }
 
 const mapStateToProps = state => ({
-  player: state.characters.player,
-  currencies: state.currencies
+  player: state.characters.player
 })
 
 export default connect(mapStateToProps, null) (PlayerStatusBar)
