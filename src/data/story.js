@@ -1,4 +1,4 @@
-export const storyStart = 'store-1'
+export const storyStart = 'store-2'
 
 const story = {
   'street-day-0': {
