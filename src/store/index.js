@@ -7,6 +7,7 @@ import story from '../data/story'
 import stores from '../data/stores'
 import locations from '../data/locations'
 import { dialogActionTypes } from '../actions/dialogActions'
+import valueReducer from './valueReducer'
 import * as dialogHelpers from '../helpers/dialogHelpers'
 
 function setDialog(state, payload) {
@@ -30,37 +31,40 @@ function setDialog(state, payload) {
   let newState = state
   if (dialog.actions) {
     for (let i = 0; i < dialog.actions.length; i++) {
-      newState = takeAction(state, { action: dialog.actions[i] })
+      newState = valueReducer(state, { action: dialog.actions[i] })
     }
   }
 
   return { ...newState, currentDialog: dialog }
 }
 
-function takeAction(state, payload) {
-  const { characters } = state
-  const { type, target, typeField, itemField, amount } = payload.action
+function buyItem(state, payload) {
+  const { target, item } = payload
+  const newCharacters = _.cloneDeep(state.characters)
 
-  const newCharacters = _.cloneDeep(characters)
-  switch (type) {
-    case "DECREASE":
-      newCharacters[target][typeField][itemField].value -= amount
-      return { ...state, characters: newCharacters }
-    case "INCREASE":
-      newCharacters[target][typeField][itemField].value += amount
-      return { ...state, characters: newCharacters }
-    default:
-      return state
+  if (newCharacters[target].inventory) {
+    newCharacters[target].inventory.push(item)
   }
-}
 
+  if (newCharacters[target].wallet) {
+    if (newCharacters[target].wallet[item.price.currency] - item.price.amount >= 0) {
+      newCharacters[target].wallet[item.price.currency] -= item.price.amount
+    } else {
+      // failed payment
+    }
+  }
+
+  return { ...state, characters: newCharacters }
+}
 
 function rootReducer(state, action) {
   switch (action.type) {
     case dialogActionTypes.SET_DIALOG:
       return setDialog(state, action.payload)
     case dialogActionTypes.TAKE_ACTION:
-      return takeAction(state, action.payload)
+      return valueReducer(state, action.payload)
+    case dialogActionTypes.BUY_ITEM:
+      return buyItem(state, action.payload)
     default:
       return state
   }

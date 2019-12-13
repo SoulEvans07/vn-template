@@ -45,10 +45,7 @@ class DialogPanel extends Component{
   }
 
   buy(selected) {
-    console.log(selected)
-
-    // actions.buy
-    // this.continue()
+    this.props.actions.buyItem('player', selected)
   }
 
   renderOption(option, index) {
@@ -58,8 +55,8 @@ class DialogPanel extends Component{
     let isDisabled = false
     if (option.condition != null) {
       const { condition } = option
-      text = `[${player[condition.typeField][condition.itemField][condition.displayNameField]}` +
-        `  ${player[condition.typeField][condition.itemField].value}/${condition.value}] ${text}`
+      text = `[${player[condition.typeField][condition.propField][condition.displayNameField]}` +
+        `  ${player[condition.typeField][condition.propField].value}/${condition.value}] ${text}`
 
       isDisabled = !dialogHelpers.checkConditionByOption(option, player)
     }

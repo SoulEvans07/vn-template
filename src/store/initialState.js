@@ -14,7 +14,7 @@ const player = {
     yen: 500,
     diamond: 1,
   },
-  inventory: {}
+  inventory: []
 }
 
 const characters = {

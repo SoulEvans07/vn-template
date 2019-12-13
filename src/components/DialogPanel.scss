@@ -1,5 +1,7 @@
 $textbox-height: 25%;
 $side-padding: 15%;
+$store-width: 4;
+$card-size: 100px;
 
 .dialog-panel {
   position: relative;
@@ -66,9 +68,6 @@ $side-padding: 15%;
     }
 
     &.store {
-      $store-width: 5;
-      $card-size: 100px;
-
       //justify-content: unset;
       align-items: unset;
       padding: 0 $side-padding;

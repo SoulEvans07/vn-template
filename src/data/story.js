@@ -31,7 +31,7 @@ const story = {
     scene: {
       location: 'coffe-shop',
       characters: [
-        { name: 'barista', position: { 'right': '50px', 'bottom': '-200px', 'z-index': 0 } }
+        { name: 'barista', position: { right: '50px', bottom: '-200px', zIndex: 0 } }
       ]
     }
   },
@@ -41,7 +41,7 @@ const story = {
     scene: {
       location: 'coffe-shop',
       characters: [
-        { name: 'barista', position: { 'right': '50px', 'bottom': '-200px', 'z-index': 0 } }
+        { name: 'barista', position: { right: '50px', bottom: '-200px', zIndex: 0 } }
       ],
       store: 'coffee-shop'
     }
@@ -52,7 +52,7 @@ const story = {
     scene: {
       location: 'coffe-shop',
       characters: [
-        { name: 'barista', position: { 'right': '50px', 'bottom': '-200px', 'z-index': 0 } }
+        { name: 'barista', position: { right: '50px', bottom: '-200px', zIndex: 0 } }
       ]
     }
   },
@@ -75,7 +75,7 @@ const story = {
     scene: {
       location: 'school',
       characters: [
-        { name: 'emma', position: { 'right': '50px', 'bottom': '-200px', 'z-index': 0 } }
+        { name: 'emma', position: { right: '50px', bottom: '-200px', zIndex: 0 } }
       ]
     }
   },
@@ -85,7 +85,7 @@ const story = {
     scene: {
       location: 'school',
       characters: [
-        { name: 'emma', position: { 'right': '50px', 'bottom': '-200px', 'z-index': 0 } }
+        { name: 'emma', position: { right: '50px', bottom: '-200px', zIndex: 0 } }
       ]
     }
   },
@@ -95,7 +95,7 @@ const story = {
     scene: {
       location: 'school',
       characters: [
-        { name: 'emma', position: { 'right': '50px', 'bottom': '-200px', 'z-index': 0 } }
+        { name: 'emma', position: { right: '50px', bottom: '-200px', zIndex: 0 } }
       ]
     }
   },
@@ -104,14 +104,14 @@ const story = {
     next: [ 'school-3-1-1' ], isSkippable: true,
     condition: {
       typeField: 'stats',
-      itemField: 'cha',
+      propField: 'cha',
       displayNameField: 'name',
       value: 9
     },
     scene: {
       location: 'school',
       characters: [
-        { name: 'emma', position: { 'right': '50px', 'bottom': '-200px', 'z-index': 0 } }
+        { name: 'emma', position: { right: '50px', bottom: '-200px', zIndex: 0 } }
       ]
     }
   },
@@ -121,7 +121,7 @@ const story = {
     scene: {
       location: 'school',
       characters: [
-        { name: 'emma', position: { 'right': '50px', 'bottom': '-200px', 'z-index': 0 } }
+        { name: 'emma', position: { right: '50px', bottom: '-200px', zIndex: 0 } }
       ]
     }
   },
@@ -131,7 +131,7 @@ const story = {
     scene: {
       location: 'school',
       characters: [
-        { name: 'emma', position: { 'right': '50px', 'bottom': '-200px', 'z-index': 0 } }
+        { name: 'emma', position: { right: '50px', bottom: '-200px', zIndex: 0 } }
       ]
     }
   },
@@ -141,7 +141,7 @@ const story = {
     scene: {
       location: 'school',
       characters: [
-        { name: 'emma', position: { 'right': '50px', 'bottom': '-200px', 'z-index': 0 } }
+        { name: 'emma', position: { right: '50px', bottom: '-200px', zIndex: 0 } }
       ]
     }
   },
@@ -151,7 +151,7 @@ const story = {
     scene: {
       location: 'school',
       characters: [
-        { name: 'emma', position: { 'right': '50px', 'bottom': '-200px', 'z-index': 0 } }
+        { name: 'emma', position: { right: '50px', bottom: '-200px', zIndex: 0 } }
       ]
     }
   },
@@ -161,8 +161,8 @@ const story = {
     scene: {
       location: 'school',
       characters: [
-        { name: 'emma', position: { 'right': '50px', 'bottom': '-200px', 'z-index': 0 } },
-        { name: 'lucy', position: { 'right': '300px', 'bottom': '-200px', 'z-index': 0 } }
+        { name: 'emma', position: { right: '50px', bottom: '-200px', zIndex: 0 } },
+        { name: 'lucy', position: { right: '300px', bottom: '-200px', zIndex: 0 } }
       ]
     }
   },
@@ -173,8 +173,8 @@ const story = {
     scene: {
       location: 'school',
       characters: [
-        { name: 'emma', position: { 'right': '50px', 'bottom': '-200px', 'z-index': 0 } },
-        { name: 'lucy', position: { 'right': '300px', 'bottom': '-200px', 'z-index': 0 } }
+        { name: 'emma', position: { right: '50px', bottom: '-200px', zIndex: 0 } },
+        { name: 'lucy', position: { right: '300px', bottom: '-200px', zIndex: 0 } }
       ]
     }
   },
@@ -183,15 +183,15 @@ const story = {
     next: [ 'school-3-2-4-1-1' ], isSkippable: false,
     condition: {
       typeField: 'stats',
-      itemField: 'cha',
+      propField: 'cha',
       displayNameField: 'name',
       value: 9
     },
     scene: {
       location: 'school',
       characters: [
-        { name: 'emma', position: { 'right': '50px', 'bottom': '-200px', 'z-index': 0 } },
-        { name: 'lucy', position: { 'right': '300px', 'bottom': '-200px', 'z-index': 0 } }
+        { name: 'emma', position: { right: '50px', bottom: '-200px', zIndex: 0 } },
+        { name: 'lucy', position: { right: '300px', bottom: '-200px', zIndex: 0 } }
       ]
     }
   },
@@ -201,8 +201,8 @@ const story = {
     scene: {
       location: 'school',
       characters: [
-        { name: 'emma', position: { 'right': '50px', 'bottom': '-200px', 'z-index': 0 } },
-        { name: 'lucy', position: { 'right': '300px', 'bottom': '-200px', 'z-index': 0 } }
+        { name: 'emma', position: { right: '50px', bottom: '-200px', zIndex: 0 } },
+        { name: 'lucy', position: { right: '300px', bottom: '-200px', zIndex: 0 } }
       ]
     }
   },
@@ -212,17 +212,19 @@ const story = {
     actions: [
       {
         type: 'DECREASE',
-        target: 'player',
-        typeField: 'stats',
-        itemField: 'cha',
-        amount: 2
+        payload: {
+          target: 'player',
+          typeField: 'stats',
+          propField: 'cha',
+          amount: 2
+        }
       }
     ],
     scene: {
       location: 'school',
       characters: [
-        { name: 'emma', position: { 'right': '50px', 'bottom': '-200px', 'z-index': 0 } },
-        { name: 'lucy', position: { 'right': '300px', 'bottom': '-200px', 'z-index': 0 } }
+        { name: 'emma', position: { right: '50px', bottom: '-200px', zIndex: 0 } },
+        { name: 'lucy', position: { right: '300px', bottom: '-200px', zIndex: 0 } }
       ]
     }
   },
@@ -232,8 +234,8 @@ const story = {
     scene: {
       location: 'school',
       characters: [
-        { name: 'emma', position: { 'right': '50px', 'bottom': '-200px', 'z-index': 0 } },
-        { name: 'lucy', position: { 'right': '300px', 'bottom': '-200px', 'z-index': 0 } }
+        { name: 'emma', position: { right: '50px', bottom: '-200px', zIndex: 0 } },
+        { name: 'lucy', position: { right: '300px', bottom: '-200px', zIndex: 0 } }
       ]
     }
   },
@@ -243,8 +245,8 @@ const story = {
     scene: {
       location: 'school',
       characters: [
-        { name: 'emma', position: { 'right': '50px', 'bottom': '-200px', 'z-index': 0 } },
-        { name: 'lucy', position: { 'right': '300px', 'bottom': '-200px', 'z-index': 0 } }
+        { name: 'emma', position: { right: '50px', bottom: '-200px', zIndex: 0 } },
+        { name: 'lucy', position: { right: '300px', bottom: '-200px', zIndex: 0 } }
       ]
     }
   },
@@ -253,15 +255,15 @@ const story = {
     next: [ 'school-3-2-4-3-1' ], isSkippable: false,
     condition: {
       typeField: 'stats',
-      itemField: 'str',
+      propField: 'str',
       displayNameField: 'name',
       value: 5
     },
     scene: {
       location: 'school',
       characters: [
-        { name: 'emma', position: { 'right': '50px', 'bottom': '-200px', 'z-index': 0 } },
-        { name: 'lucy', position: { 'right': '300px', 'bottom': '-200px', 'z-index': 0 } }
+        { name: 'emma', position: { right: '50px', bottom: '-200px', zIndex: 0 } },
+        { name: 'lucy', position: { right: '300px', bottom: '-200px', zIndex: 0 } }
       ]
     }
   },
@@ -271,17 +273,19 @@ const story = {
     actions: [
       {
         type: 'INCREASE',
-        target: 'player',
-        typeField: 'stats',
-        itemField: 'cha',
-        amount: 1
+        payload: {
+          target: 'player',
+          typeField: 'stats',
+          propField: 'cha',
+          amount: 1
+        }
       }
     ],
     scene: {
       location: 'school',
       characters: [
-        { name: 'emma', position: { 'right': '50px', 'bottom': '-200px', 'z-index': 0 } },
-        { name: 'lucy', position: { 'right': '300px', 'bottom': '-200px', 'z-index': 0 } }
+        { name: 'emma', position: { right: '50px', bottom: '-200px', zIndex: 0 } },
+        { name: 'lucy', position: { right: '300px', bottom: '-200px', zIndex: 0 } }
       ]
     }
   },

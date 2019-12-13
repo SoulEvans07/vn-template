@@ -10,7 +10,7 @@ export function checkCondition(selected, player) {
 export function checkConditionByOption(option, player) {
   if (option.condition != null) {
     const { condition } = option
-    const value = player[condition.typeField][condition.itemField].value
+    const value = player[condition.typeField][condition.propField].value
     return value >= condition.value
   } else {
     return true
