@@ -49,6 +49,7 @@ function buyItem(state, payload) {
   if (newCharacters[target].wallet) {
     if (newCharacters[target].wallet[item.price.currency] - item.price.amount >= 0) {
       newCharacters[target].wallet[item.price.currency] -= item.price.amount
+      newCharacters[target].transactions[item.price.currency].push(-item.price.amount)
     } else {
       // failed payment
     }

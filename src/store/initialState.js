@@ -14,6 +14,10 @@ const player = {
     yen: 500,
     diamond: 1,
   },
+  transactions: {
+    yen: [],
+    diamond: []
+  },
   inventory: []
 }
 

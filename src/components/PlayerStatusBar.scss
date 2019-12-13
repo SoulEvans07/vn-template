@@ -26,7 +26,7 @@ $color6: #b6b9c8;
     display: inline-block;
 
     .currency {
-      margin: 0 10px;
+      padding: 0 10px;
 
       .currency-short {
 
@@ -35,6 +35,31 @@ $color6: #b6b9c8;
       .currency-amount {
 
       }
+    }
+
+    .change {
+      display: inline-flex;;
+      transform: translateX(-100%);
+      padding: 0 10px;
+      position: absolute;
+      color: white;
+      font-weight: bold;
+      top: 80px;
+      z-index: 10;
+      height: 30px;
+      line-height: 30px;
+
+      background: rgba(218, 218, 0, 0.8);
+      border-radius: 5px;
+
+      opacity: 0;
+      animation-name: change-anim;
+      animation-duration: 1s;
+    }
+
+    @keyframes change-anim {
+      from { top: 5px; opacity: 1; };
+      to { top: 80px; opacity: 0; };
     }
   }
 }
