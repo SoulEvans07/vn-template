@@ -1,4 +1,5 @@
 $textbox-height: 25%;
+$side-padding: 15%;
 
 .dialog-panel {
   position: relative;
@@ -68,17 +69,29 @@ $textbox-height: 25%;
     }
 
     &.store {
+      $store-width: 5;
       $card-size: 100px;
 
-      //align-items: unset;
+      //justify-content: unset;
+      align-items: unset;
+      padding: 0 $side-padding;
+
+      .option {
+        width: calc(#{$card-size} * #{$store-width} + 10px * #{$store-width});
+        padding: 0 5px;
+      }
 
       .store-front {
         background: rgba(255, 255, 255, 0.1);
         border-radius: 5px;
         height: calc(#{$card-size} * 5);
+        width: calc(#{$card-size} * #{$store-width} + 10px * #{$store-width});
+        max-width: calc(#{$card-size} * #{$store-width} + 10px * #{$store-width});
+        box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.5);
         overflow: hidden;
         overflow-y: scroll;
         padding: 5px;
+        flex-direction: row;
 
         .store-row {
           display: flex;
@@ -86,6 +99,7 @@ $textbox-height: 25%;
         }
 
         .item-card {
+          display: inline-flex;
           width: $card-size;
           height: $card-size;
           margin: 5px;
@@ -151,8 +165,8 @@ $textbox-height: 25%;
     position: fixed;
     bottom: 0;
     z-index: 1;
-    width: calc(100% - 30%);
-    padding: 10px 15%;
+    width: calc(100% - #{$side-padding} * 2);
+    padding: 10px $side-padding;
     height: calc(#{$textbox-height} - 20px - 20px);
     background: rgba(238, 238, 238, 0.8);
 

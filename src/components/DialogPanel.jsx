@@ -10,8 +10,6 @@ import itemMap from '../data/items'
 import currencies from '../data/currencies'
 import { storyStart } from '../data/story'
 
-const STORE_WIDTH = 5
-
 class DialogPanel extends Component{
   constructor(props) {
     super(props)
@@ -106,30 +104,13 @@ class DialogPanel extends Component{
     const { items } = dialog.scene.store
 
     const exitStoreOption = story[next[0]]
-    const itemRows = []
-    let rowIndex = 0;
-    items.forEach((item, index) => {
-      if (index % STORE_WIDTH === 0) {
-        itemRows[rowIndex] = [ item ]
-      } else {
-        itemRows[rowIndex].push(item)
-      }
-
-      if (index % STORE_WIDTH === STORE_WIDTH - 1) {
-        rowIndex++
-      }
-    })
 
     return (
       <div className="store dialog-options">
         <div className="store-front">
-          { itemRows.map((row, ri) =>
-            <div className="store-row" key={`store-row-${ri}`}>
-              { row.map((item, index) => (
-                this.renderItem(item, index)
-              ))}
-            </div>
-          )}
+          { items.map((item, index) => (
+            this.renderItem(item, index)
+          ))}
         </div>
         <div className="option" onClick={() => actions.setDialog(exitStoreOption.next)}>
           { exitStoreOption.text }
