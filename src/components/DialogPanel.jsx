@@ -137,7 +137,8 @@ class DialogPanel extends Component{
           {!!currentDialog && !!currentDialog.scene.characters &&
             currentDialog.scene.characters.map((char, index) => {
               return (
-                <div className="character-avatar" key={char.name}>
+                <div className="character-avatar" key={char.name}
+                  style={char.position}>
                   <img src={char.img} alt={char.name}/>
                 </div>
               )

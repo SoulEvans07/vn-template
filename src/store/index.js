@@ -18,7 +18,11 @@ function setDialog(state, payload) {
   const dialog = _.cloneDeep(story[dialogIds[index]])
 
   dialog.speaker = characters[dialog.speaker]
-  dialog.scene.characters = dialog.scene.characters.map(char => characters[char])
+  dialog.scene.characters = dialog.scene.characters.map(char => {
+    const character = characters[char.name]
+    character.position = char.position
+    return character
+  })
   dialog.scene.location = locations[dialog.scene.location]
   dialog.scene.store = stores[dialog.scene.store]
   dialog.text = dialogHelpers.fillDialog(state, dialog.text)
