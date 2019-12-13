@@ -2,6 +2,7 @@ import { applyMiddleware, createStore } from 'redux'
 import thunk from 'redux-thunk'
 import _ from 'lodash'
 
+import { UUID4 } from '../helpers/UUID'
 import initialState from './initialState'
 import story from '../data/story'
 import stores from '../data/stores'
@@ -49,12 +50,26 @@ function buyItem(state, payload) {
   if (newCharacters[target].wallet) {
     if (newCharacters[target].wallet[item.price.currency] - item.price.amount >= 0) {
       newCharacters[target].wallet[item.price.currency] -= item.price.amount
-      newCharacters[target].transactions[item.price.currency].push(-item.price.amount)
+      newCharacters[target].transactions[item.price.currency].push({
+        _id: UUID4(),
+        value: -item.price.amount,
+        currency: item.price.currency
+      })
     } else {
       // failed payment
     }
   }
 
+  return { ...state, characters: newCharacters }
+}
+
+function removeTransaction(state, payload) {
+  const { target, transaction } = payload
+  const { currency } = transaction
+  const newCharacters = _.cloneDeep(state.characters)
+  newCharacters[target].transactions[currency] = newCharacters[target].transactions[currency].filter(trans => {
+    return trans._id !== transaction._id
+  })
   return { ...state, characters: newCharacters }
 }
 
@@ -66,6 +81,8 @@ function rootReducer(state, action) {
       return valueReducer(state, action.payload)
     case dialogActionTypes.BUY_ITEM:
       return buyItem(state, action.payload)
+    case "REMOVE_TRANSACTION":
+      return removeTransaction(state, action.payload)
     default:
       return state
   }

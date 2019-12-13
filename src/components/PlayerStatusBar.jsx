@@ -1,13 +1,15 @@
 import React, { Component, Fragment } from 'react'
+import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
 import currencies from '../data/currencies'
+import * as dialogActions from '../actions/dialogActions'
 
 import './PlayerStatusBar.scss'
 
 class PlayerStatusBar extends Component {
   render() {
-    const { player } = this.props
+    const { player, actions } = this.props
 
     return (
       <div className="player-statusbar">
@@ -23,7 +25,7 @@ class PlayerStatusBar extends Component {
                   <span className="currency-amount">{value}</span>
                 </span>
                 {!!player.transactions && !!player.transactions[name] && player.transactions[name].map((trans, index) => {
-                  let transValue = trans
+                  let transValue = trans.value
                   let color = 'rgba(0, 218, 0, 0.8)'
                   let sign = '+'
                   if (transValue < 0) {
@@ -32,8 +34,8 @@ class PlayerStatusBar extends Component {
                     sign = '-'
                   }
                   return (
-                    <span className="change" key={`${trans}${name}-${index}`}
-                      style={{background: color}} onAnimationEnd={() => player.transactions[name].splice( player.transactions[name].indexOf(trans), 1 )}>
+                    <span className="change" key={`${trans._id}`}
+                      style={{background: color}} onAnimationEnd={() => { actions.removeTransaction('player', trans) }}>
                       <span className="change-sign">{sign}</span>
                       <span className="change-short">{currencies[name].symbol}</span>
                       <span className="change-amount">{transValue}</span>
@@ -53,4 +55,8 @@ const mapStateToProps = state => ({
   player: state.characters.player
 })
 
-export default connect(mapStateToProps, null) (PlayerStatusBar)
+const mapDispatchToProps = (dispatch) => ({
+  actions: bindActionCreators({ ...dialogActions }, dispatch)
+})
+
+export default connect(mapStateToProps, mapDispatchToProps) (PlayerStatusBar)

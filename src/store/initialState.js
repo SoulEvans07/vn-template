@@ -11,7 +11,7 @@ const player = {
     lck: { name: 'Luck', value: 10 },
   },
   wallet: {
-    yen: 500,
+    yen: 5000,
     diamond: 1,
   },
   transactions: {
