@@ -40,21 +40,30 @@ function setDialog(state, payload) {
 }
 
 function buyItem(state, payload) {
-  const { target, item } = payload
+  const { target, store, item } = payload
   const newCharacters = _.cloneDeep(state.characters)
 
-  if (newCharacters[target].inventory) {
-    newCharacters[target].inventory.push(item)
-  }
-
   if (newCharacters[target].wallet) {
-    if (newCharacters[target].wallet[item.price.currency] - item.price.amount >= 0) {
+    if (newCharacters[target].wallet[item.price.currency] - item.price.amount >= 0 &&
+      store.items[item.name] &&
+      (store.items[item.name].amount === undefined || (store.items[item.name].amount && store.items[item.name].amount > 0)) ) {
+
       newCharacters[target].wallet[item.price.currency] -= item.price.amount
       newCharacters[target].transactions[item.price.currency].push({
         _id: UUID4(),
         value: -item.price.amount,
         currency: item.price.currency
       })
+
+      if (newCharacters[target].inventory) {
+        if (newCharacters[target].inventory[item.name] === undefined) {
+          newCharacters[target].inventory[item.name] = { amount: 0 }
+        }
+        newCharacters[target].inventory[item.name].amount++
+        if (store.items[item.name].amount) {
+          store.items[item.name].amount--
+        }
+      }
     } else {
       // failed payment
     }

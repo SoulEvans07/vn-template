@@ -44,8 +44,8 @@ class DialogPanel extends Component{
     }
   }
 
-  buy(selected) {
-    this.props.actions.buyItem('player', selected)
+  buy(selectedItem, fromStore) {
+    this.props.actions.buyItem('player', fromStore, selectedItem)
   }
 
   renderOption(option, index) {
@@ -79,15 +79,20 @@ class DialogPanel extends Component{
   }
 
   renderItem(item, index) {
+    const { currentDialog, player } = this.props
     const displayName = itemMap[item.name].displayName
     const description = itemMap[item.name].description
+    const amount = item.amount
     const symbol = currencies[item.price.currency].symbol
     const price = item.price.amount
+    const haveEnoughMoney = price <= player.wallet[item.price.currency]
 
     return (
-      <div className="item-card" key={item.name + index} onClick={() => this.buy(item)} title={description} >
+      <div className={`item-card ${amount !== 0 && haveEnoughMoney ? '' : 'disabled'}` } key={item.name + index} title={description}
+        onClick={() => this.buy(item, currentDialog.scene.store)} >
         <img className="image" src={itemMap[item.name].img} alt={item.name}/>
-        <div className="price-label">{`${symbol}${price}`}</div>
+        {amount !== undefined && <div className="amount-label">{`${amount}`}</div>}
+        <div className={`price-label ${haveEnoughMoney ? '' : 'not-enough-money'}` }>{`${symbol}${price}`}</div>
         <div className="name-label">
           <span className="text">{`${displayName}`}</span>
         </div>
@@ -105,9 +110,12 @@ class DialogPanel extends Component{
     return (
       <div className="store dialog-options">
         <div className="store-front">
-          { items.map((item, index) => (
-            this.renderItem(item, index)
-          ))}
+          { Object.entries(items).map((entry, index) => {
+            const item = { name: entry[0], ...entry[1] }
+            return (
+              this.renderItem(item, index)
+            )
+          })}
         </div>
         <div className="option" onClick={() => actions.setDialog(exitStoreOption.next)}>
           { exitStoreOption.text }

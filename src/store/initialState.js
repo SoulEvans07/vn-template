@@ -12,13 +12,13 @@ const player = {
   },
   wallet: {
     yen: 5000,
-    diamond: 1,
+    diamond: 3,
   },
   transactions: {
     yen: [],
     diamond: []
   },
-  inventory: []
+  inventory: {}
 }
 
 const characters = {

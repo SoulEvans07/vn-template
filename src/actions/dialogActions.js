@@ -19,10 +19,10 @@ export function takeAction(action) {
   }
 }
 
-export function buyItem(target, item) {
+export function buyItem(target, store, item) {
   return {
     type: dialogActionTypes.BUY_ITEM,
-    payload: { target, item }
+    payload: { target, store, item }
   }
 }
 
