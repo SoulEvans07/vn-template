@@ -6,8 +6,9 @@ $color5: #7c818c;
 $color6: #b6b9c8;
 
 .player-statusbar {
-  padding: 0 10px;
-  width: calc(100% - 20px);
+  z-index: 100;
+  padding: 0 10px 0 0;
+  width: calc(100% - 10px);
   height: 40px;
   line-height: 40px;
 
@@ -18,8 +19,30 @@ $color6: #b6b9c8;
   flex-direction: row;
   justify-content: space-between;
 
-  .player-name {
+  .navbar-menu {
     display: inline-block;
+
+    .menu-item {
+      display: inline-block;
+      padding: 0 10px;
+
+      &:hover {
+        background: $color3;
+      }
+
+      &:active {
+        background: $color1;
+      }
+
+      &.open {
+        background: $color3;
+      }
+
+      &.invnetory-btn {
+
+      }
+    }
+
   }
 
   .player-wallet {

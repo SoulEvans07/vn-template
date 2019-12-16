@@ -187,7 +187,6 @@ class DialogPanel extends Component{
 }
 
 const mapStateToProps = (state) => ({
-  currencies: state.currencies,
   player: state.characters.player,
   currentDialog: state.currentDialog,
 })

@@ -8,6 +8,7 @@ import story from '../data/story'
 import stores from '../data/stores'
 import locations from '../data/locations'
 import { dialogActionTypes } from '../actions/dialogActions'
+import { routeActionTypes } from '../actions/routeActions'
 import valueReducer from './valueReducer'
 import * as dialogHelpers from '../helpers/dialogHelpers'
 
@@ -82,6 +83,14 @@ function removeTransaction(state, payload) {
   return { ...state, characters: newCharacters }
 }
 
+function setRoute(state, payload) {
+  return { ...state, prevRoute: state.route, route: payload.route }
+}
+
+function backRoute(state, payload) {
+  return { ...state, route: state.prevRoute }
+}
+
 function rootReducer(state, action) {
   switch (action.type) {
     case dialogActionTypes.SET_DIALOG:
@@ -92,6 +101,10 @@ function rootReducer(state, action) {
       return buyItem(state, action.payload)
     case "REMOVE_TRANSACTION":
       return removeTransaction(state, action.payload)
+    case routeActionTypes.SET_ROUTE:
+      return setRoute(state, action.payload)
+    case routeActionTypes.BACK_ROUTE:
+      return backRoute(state, action.payload)
     default:
       return state
   }

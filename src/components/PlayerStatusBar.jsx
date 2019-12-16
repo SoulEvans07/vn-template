@@ -4,16 +4,39 @@ import { connect } from 'react-redux'
 
 import currencies from '../data/currencies'
 import * as dialogActions from '../actions/dialogActions'
+import * as routeActions from '../actions/routeActions'
 
 import './PlayerStatusBar.scss'
 
 class PlayerStatusBar extends Component {
+  constructor(props) {
+    super(props)
+
+    this.openInventory = this.openInventory.bind(this)
+  }
+
+  openInventory() {
+    const { actions, route } = this.props
+
+    if (route !== '/inventory') {
+      actions.setRoute('/inventory')
+    } else {
+      actions.backRoute()
+    }
+  }
+
   render() {
-    const { player, actions } = this.props
+    const { player, actions, route } = this.props
+    const inventoryOpen = route === '/inventory'
 
     return (
       <div className="player-statusbar">
-        <span className="player-name">{player.name}</span>
+        <div className="navbar-menu">
+          <span className={`menu-item invnetory-btn ${inventoryOpen ? 'open' : ''}`}
+            onClick={() => this.openInventory()}>
+            Inventory
+          </span>
+        </div>
         <span className="player-wallet">
           {!!player.wallet && Object.entries(player.wallet).map(curr => {
             const name = curr[0]
@@ -52,11 +75,12 @@ class PlayerStatusBar extends Component {
 }
 
 const mapStateToProps = state => ({
-  player: state.characters.player
+  player: state.characters.player,
+  route: state.route
 })
 
 const mapDispatchToProps = (dispatch) => ({
-  actions: bindActionCreators({ ...dialogActions }, dispatch)
+  actions: bindActionCreators({ ...dialogActions, ...routeActions }, dispatch)
 })
 
 export default connect(mapStateToProps, mapDispatchToProps) (PlayerStatusBar)

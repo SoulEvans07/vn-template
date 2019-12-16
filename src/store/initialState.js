@@ -31,8 +31,10 @@ const characters = {
 
 const initialState = {
   error: null,
+  currentDialog: null,
   characters,
-  currentDialog: null
+  route: '/',
+  prevRoute: '/'
 }
 
 export default initialState

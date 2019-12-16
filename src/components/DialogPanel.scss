@@ -4,7 +4,10 @@ $store-width: 4;
 $card-size: 100px;
 
 .dialog-panel {
-  position: relative;
+  position: absolute;
+  top: 40px;
+  z-index: 0;
+  overflow: hidden;
   margin: auto;
   width: 100%;
   height: calc(100% - 40px);
@@ -87,11 +90,6 @@ $card-size: 100px;
         overflow-y: scroll;
         padding: 5px;
         flex-direction: row;
-
-        .store-row {
-          display: flex;
-          flex-direction: row;
-        }
 
         .item-card {
           display: inline-flex;
