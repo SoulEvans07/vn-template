@@ -86,13 +86,14 @@ class DialogPanel extends Component{
     const symbol = currencies[item.price.currency].symbol
     const price = item.price.amount
     const haveEnoughMoney = price <= player.wallet[item.price.currency]
+    const outOfStock = amount <= 0
 
     return (
       <div className={`item-card ${amount !== 0 && haveEnoughMoney ? '' : 'disabled'}` } key={item.name + index} title={description}
         onClick={() => this.buy(item, currentDialog.scene.store)} >
         <img className="image" src={itemMap[item.name].img} alt={item.name}/>
-        {amount !== undefined && <div className="amount-label">{`${amount}`}</div>}
-        <div className={`price-label ${haveEnoughMoney ? '' : 'not-enough-money'}` }>{`${symbol}${price}`}</div>
+        {amount !== undefined && <div className={`amount-label ${outOfStock ? 'out-of-stock' : ''}`}>{`${amount}`}</div>}
+        <div className={`price-label ${haveEnoughMoney ? '' : 'not-enough-money'}`}>{`${symbol}${price}`}</div>
         <div className="name-label">
           <span className="text">{`${displayName}`}</span>
         </div>
