@@ -18,7 +18,12 @@ class DialogPanel extends Component{
       props.actions.setDialog([storyStart])
     }
 
+    this.state = {
+      selectedItem: null
+    }
+
     this.continue = this.continue.bind(this)
+    this.selectItem = this.selectItem.bind(this)
     this.buy = this.buy.bind(this)
     this.renderChoices = this.renderChoices.bind(this)
     this.renderOption = this.renderOption.bind(this)
@@ -44,8 +49,17 @@ class DialogPanel extends Component{
     }
   }
 
-  buy(selectedItem, fromStore) {
-    this.props.actions.buyItem('player', fromStore, selectedItem)
+  selectItem(item) {
+    return (event) => {
+      event.stopPropagation()
+      this.setState({ selectedItem: item })
+    }
+  }
+
+  buy() {
+    const { currentDialog, actions } = this.props
+    const { selectedItem } = this.state
+    actions.buyItem('player', currentDialog.scene.store, selectedItem)
   }
 
   renderOption(option, index) {
@@ -79,44 +93,61 @@ class DialogPanel extends Component{
   }
 
   renderItem(item, index) {
-    const { currentDialog, player } = this.props
-    const displayName = itemMap[item.name].displayName
-    const description = itemMap[item.name].description
-    const amount = item.amount
-    const symbol = currencies[item.price.currency].symbol
-    const price = item.price.amount
-    const haveEnoughMoney = price <= player.wallet[item.price.currency]
-    const outOfStock = amount <= 0
+    const { player } = this.props
+    if (item !== null) {
+      const displayName = itemMap[item.name].displayName
+      const description = itemMap[item.name].description
+      const amount = item.amount
+      const symbol = currencies[item.price.currency].symbol
+      const price = item.price.amount
+      const haveEnoughMoney = price <= player.wallet[item.price.currency]
+      const outOfStock = amount <= 0
 
-    return (
-      <div className={`item-card ${amount !== 0 && haveEnoughMoney ? '' : 'disabled'}` } key={item.name + index} title={description}
-        onClick={() => this.buy(item, currentDialog.scene.store)} >
-        <img className="image" src={itemMap[item.name].img} alt={item.name}/>
-        {amount !== undefined && <div className={`amount-label ${outOfStock ? 'out-of-stock' : ''}`}>{`${amount}`}</div>}
-        <div className={`price-label ${haveEnoughMoney ? '' : 'not-enough-money'}`}>{`${symbol}${price}`}</div>
-        <div className="name-label">
-          <span className="text">{`${displayName}`}</span>
+      return (
+        <div className={`item-card ${amount !== 0 && haveEnoughMoney ? '' : 'disabled'}` } key={item.name + index} title={description}
+          onClick={this.selectItem(item)} >
+          <img className="image" src={itemMap[item.name].img} alt={item.name}/>
+          {amount !== undefined && <div className={`amount-label ${outOfStock ? 'out-of-stock' : ''}`}>{`${amount}`}</div>}
+          <div className={`price-label ${haveEnoughMoney ? '' : 'not-enough-money'}`}>{`${symbol}${price}`}</div>
+          <div className="name-label">
+            <span className="text">{`${displayName}`}</span>
+          </div>
         </div>
-      </div>
-    )
+      )
+    } else {
+      return (
+        <div className="item-card" key={`empty-${index}`}></div>
+      )
+    }
   }
 
   renderStore(dialog) {
-    const { next } = dialog
+    const { selectedItem } = this.state
     const { actions } = this.props
     const { items } = dialog.scene.store
 
-    const exitStoreOption = story[next[0]]
+    const exitStoreOption = story[dialog.next[0]]
+    const selectedItemDescription = selectedItem !== null ? itemMap[selectedItem.name].description : null
+    let selectedStoreItem = null
+    if (selectedItem) {
+      selectedStoreItem = { ...selectedItem, ...items[selectedItem.name] }
+    }
 
     return (
       <div className="store dialog-options">
-        <div className="store-front">
+        <div className="store-front" onClick={this.selectItem(null)}>
           { Object.entries(items).map((entry, index) => {
             const item = { name: entry[0], ...entry[1] }
-            return (
-              this.renderItem(item, index)
-            )
+            return this.renderItem(item, index)
           })}
+        </div>
+        <div className="item-description">
+          { this.renderItem(selectedStoreItem) }
+          <div className="description">{ selectedItemDescription }</div>
+        </div>
+        <div className={`option ${selectedItem === null ? 'disabled' : ''}`}
+          onClick={() => selectedItem && this.buy()}>
+          Buy
         </div>
         <div className="option" onClick={() => actions.setDialog(exitStoreOption.next)}>
           { exitStoreOption.text }
