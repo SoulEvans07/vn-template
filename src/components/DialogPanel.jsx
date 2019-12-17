@@ -27,13 +27,32 @@ class DialogPanel extends Component{
     this.buy = this.buy.bind(this)
     this.renderChoices = this.renderChoices.bind(this)
     this.renderOption = this.renderOption.bind(this)
+    this.keyboardHandler = this.keyboardHandler.bind(this)
+  }
+
+  componentDidMount() {
+    window.addEventListener('keypress', this.keyboardHandler)
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('keypress', this.keyboardHandler)
+  }
+
+  keyboardHandler(event) {
+    const keyCode = event.code.toLowerCase()
+
+    switch (keyCode) {
+      case "space":
+        if (this.props.route !== '/inventory') this.continue()
+        break
+    }
   }
 
   continue(selected) {
     const { currentDialog, player, actions } = this.props
 
     if (currentDialog.next) {
-      if (currentDialog.next.length === 1) {
+      if (currentDialog.next.length === 1 && currentDialog.scene.store === undefined) {
         actions.setDialog(currentDialog.next)
       } else if (currentDialog.next.length > 1 && selected != null) {
         const next = currentDialog.next.map(opt => story[opt])[selected]
@@ -220,6 +239,7 @@ class DialogPanel extends Component{
 const mapStateToProps = (state) => ({
   player: state.characters.player,
   currentDialog: state.currentDialog,
+  route: state.route
 })
 
 const mapDispatchToProps = (dispatch) => ({

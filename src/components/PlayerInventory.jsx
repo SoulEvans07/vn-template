@@ -31,7 +31,7 @@ class PlayerInventory extends Component {
     const sortedInventory = Object.entries(inventory).sort((a, b) => a[0].localeCompare(b[0]))
 
     return (
-      <div className="player-inventory-view" style={route === '/inventory' ? { zIndex: 10 } : null }>
+      <div className="player-inventory-view" style={route === '/inventory' ? { zIndex: 10 } : { opacity: 0 } }>
         <div className="inventory">
           { sortedInventory.map((entry, index) => {
             const item = { name: entry[0], ...entry[1] }
