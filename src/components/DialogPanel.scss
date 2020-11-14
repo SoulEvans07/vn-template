@@ -55,7 +55,8 @@ $card-size: 100px;
       margin: 10px 0;
       border-radius: 3px;
 
-      &:hover {
+      &:hover,
+      &.selected {
         background: darken(rgba(238, 238, 238, 0.8), 10%);
       }
 

@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
+import classnames from 'classnames'
 
 import './DialogPanel.scss'
 import * as dialogActions from '../actions/dialogActions'
@@ -9,6 +10,11 @@ import story from '../data/story'
 import itemMap from '../data/items'
 import currencies from '../data/currencies'
 import { storyStart } from '../data/story'
+
+const Direction = {
+  UP: -1,
+  DOWN: 1
+}
 
 class DialogPanel extends Component{
   constructor(props) {
@@ -19,7 +25,8 @@ class DialogPanel extends Component{
     }
 
     this.state = {
-      selectedItem: null
+      selectedItem: null,
+      selectedOption: null
     }
 
     this.continue = this.continue.bind(this)
@@ -28,23 +35,47 @@ class DialogPanel extends Component{
     this.renderChoices = this.renderChoices.bind(this)
     this.renderOption = this.renderOption.bind(this)
     this.keyboardHandler = this.keyboardHandler.bind(this)
+    this.handleArrowKeys = this.handleArrowKeys.bind(this)
   }
 
   componentDidMount() {
-    window.addEventListener('keypress', this.keyboardHandler)
+    window.addEventListener('keydown', this.keyboardHandler)
   }
 
   componentWillUnmount() {
-    window.removeEventListener('keypress', this.keyboardHandler)
+    window.removeEventListener('keydown', this.keyboardHandler)
+  }
+
+  handleArrowKeys(dir) {
+    const optionList = this.props.currentDialog.next
+
+    if (optionList.length > 1) {
+      const { selectedOption } = this.state
+
+      let nextIndex = selectedOption != null 
+        ? selectedOption + dir 
+        : dir < 0 
+          ? optionList.length - 1
+          : 0
+      if (nextIndex < 0) nextIndex = 0
+      if (nextIndex >= optionList.length) nextIndex = optionList.length - 1
+
+      this.setState({ selectedOption: nextIndex })
+    }
   }
 
   keyboardHandler(event) {
-    const keyCode = event.code.toLowerCase()
-
-    switch (keyCode) {
-      case "space":
+    switch (event.code) {
+      case "Space":
         if (this.props.route !== '/inventory') this.continue()
         break
+      case "ArrowUp":
+        this.handleArrowKeys(Direction.UP)
+        break
+      case "ArrowDown":
+        this.handleArrowKeys(Direction.DOWN)
+        break
+      default:
     }
   }
 
@@ -83,6 +114,7 @@ class DialogPanel extends Component{
 
   renderOption(option, index) {
     const { player } = this.props
+    const { selectedOption } = this.state
 
     let text = option.text
     let isDisabled = false
@@ -93,9 +125,25 @@ class DialogPanel extends Component{
 
       isDisabled = !dialogHelpers.checkConditionByOption(option, player)
     }
+
+    const handleOption = () => {
+      if (!isDisabled) {
+        this.setState({ selectedOption: null })
+        this.continue(index)
+      }
+    }
+
+    const handleHover = () => {
+      this.setState({ selectedOption: null })
+    }
+
     return (
-      <div className={"option" + (isDisabled ? " disabled" : "")} key={text + index}
-        onClick={() => !isDisabled && this.continue(index)}>
+      <div 
+        className={classnames('option', { disabled: isDisabled, selected: selectedOption === index })} 
+        onClick={handleOption}
+        onMouseEnter={handleHover}
+        key={text + index}
+      >
         { text }
       </div>
     )
